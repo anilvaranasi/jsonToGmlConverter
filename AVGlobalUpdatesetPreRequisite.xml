@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2025-03-01 19:39:23">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description/>
+<inserted/>
+<name>AVGlobalUpdatesetPreRequisite</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>4ce454158348e210b0abcfc0deaad3f4</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2025-03-01 19:39:22</sys_created_on>
+<sys_id>a43650198348e210b0abcfc0deaad37e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2025-03-01 19:39:22</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_script_fix_8c6d74818308a210b0abcfc0deaad387</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_fix"&gt;&lt;sys_script_fix action="INSERT_OR_UPDATE"&gt;&lt;before&gt;false&lt;/before&gt;&lt;description/&gt;&lt;name&gt;AVFindTopicWithLargestGraphLength&lt;/name&gt;&lt;record_for_rollback&gt;false&lt;/record_for_rollback&gt;&lt;script&gt;&lt;![CDATA[sDebug = 'printing from fix script = ';
+var length = 0;
+var newLength = 0;
+var expSysId;
+var grTopic = new GlideRecord('sys_cb_topic');
+grTopic.query();
+while (grTopic.next()) {
+    newLength = grTopic.graph.toString().length;
+    if (newLength &gt;= length) {
+        length = newLength;
+        expSysId = grTopic.sys_id;
+    }
+    sDebug += newLength + "|" + length + "|" + expSysId + "\n";
+}
+gs.print(sDebug);]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_fix&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-03-01 03:55:08&lt;/sys_created_on&gt;&lt;sys_id&gt;8c6d74818308a210b0abcfc0deaad387&lt;/sys_id&gt;&lt;sys_mod_count&gt;10&lt;/sys_mod_count&gt;&lt;sys_name&gt;AVFindTopicWithLargestGraphLength&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_fix_8c6d74818308a210b0abcfc0deaad387&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-03-01 19:39:11&lt;/sys_updated_on&gt;&lt;unloadable&gt;false&lt;/unloadable&gt;&lt;/sys_script_fix&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;8c6d74818308a210b0abcfc0deaad387&lt;/id&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-03-01 03:55:08&lt;/sys_created_on&gt;&lt;sys_id&gt;8d1e74818308a210b0abcfc0deaad3a7&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-03-01 03:55:08&lt;/sys_updated_on&gt;&lt;table&gt;sys_script_fix&lt;/table&gt;&lt;use_es_latest&gt;true&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1650649354</payload_hash>
+<remote_update_set display_value="AVGlobalUpdatesetPreRequisite">a43650198348e210b0abcfc0deaad37e</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2025-03-01 19:39:22</sys_created_on>
+<sys_id>a03650198348e210b0abcfc0deaad37f</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>195533844160000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2025-03-01 19:39:22</sys_updated_on>
+<table/>
+<target_name>AVFindTopicWithLargestGraphLength</target_name>
+<type>Fix Script</type>
+<update_domain>global</update_domain>
+<update_guid>b926d0193548e210c746fa0e3bb4524a</update_guid>
+<update_guid_history>b926d0193548e210c746fa0e3bb4524a:-1650649354,e71614d54948e210e4ff824e9d3b8f32:2019959228,ff52160172cca210c2e6085dfe8b6210:-1650649354,f04f34c14908a210b84adbc2275c5527:1427622126,742f74810308a210a1a41b9fa1ab8860:-1558226771,e21ffcc1c408a2105f15f25f70a798ab:-846000520,b20ffcc1b408a210bdb9671084de85e2:364601269,b8ce70058708a21026deef55f55403f9:1895857769,c2ae74c15708a2106032d071e13c4f77:-422742517,e12e74c10d08a2104d0f97ef39008971:-925738528,cd1e7481a408a2107ce1edf6b1f4e03a:1188695632</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_properties_01499becdc1612104f34465061b06ab2</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties"><sys_properties action="INSERT_OR_UPDATE"><choices/><description>This property must be set to activate MIME type checking for uploads (All version Eureka and up). Enables (true) or disables (false) mime type validation for file attachments. File extensions configured via glide.attachment.extensions will be checked for MIME type during upload.</description><ignore_cache>false</ignore_cache><is_private>false</is_private><name>glide.security.file.mime_type.validation</name><read_roles/><suffix/><sys_class_name>sys_properties</sys_class_name><sys_created_by>system</sys_created_by><sys_created_on>2024-12-03 02:06:19</sys_created_on><sys_id>01499becdc1612104f34465061b06ab2</sys_id><sys_mod_count>1</sys_mod_count><sys_name>glide.security.file.mime_type.validation</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_01499becdc1612104f34465061b06ab2</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-03-01 18:47:00</sys_updated_on><type>boolean</type><value>false</value><write_roles/></sys_properties><sys_translated_text action="delete_multiple" query="documentkey=01499becdc1612104f34465061b06ab2"/></record_update>]]></payload>
+<payload_hash>1217240223</payload_hash>
+<remote_update_set display_value="AVGlobalUpdatesetPreRequisite">a43650198348e210b0abcfc0deaad37e</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2025-03-01 19:39:22</sys_created_on>
+<sys_id>a83650198348e210b0abcfc0deaad37e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>195530884d70000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2025-03-01 19:39:22</sys_updated_on>
+<table/>
+<target_name>glide.security.file.mime_type.validation</target_name>
+<type>System Property</type>
+<update_domain>global</update_domain>
+<update_guid>313a4cd5c008e2107e674b5cbef12a9b</update_guid>
+<update_guid_history>313a4cd5c008e2107e674b5cbef12a9b:1217240223,a13a4cd5e808e210aaf564665a0da778:815139440</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
