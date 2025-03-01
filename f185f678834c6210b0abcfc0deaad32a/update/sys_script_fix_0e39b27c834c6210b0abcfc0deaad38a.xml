@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>AVTestJsonToGmlFromJsonVariable</name>
+        <record_for_rollback>false</record_for_rollback>
+        <script><![CDATA[var jsonData = {};
+var colorHash = {};
+var defaultGroupingId = gs.getProperty('x_146833_jsontog_0.node.grouping.id');
+var colorList = gs.getProperty('x_146833_jsontog_0.color.palette');
+var colorArray = colorList.split("|");
+var sDebug = 'printing from fix script ';
+var grTopic = new GlideRecord('sys_cb_topic');
+var nodeTextLevel = gs.getProperty('x_146833_jsontog_0.node.textdisplay.config.vatopic');
+grTopic.get('f9e444ee53113010af71ddeeff7b1223');
+var graph = grTopic.graph;
+var graphJson = JSON.parse(graph);
+var nodeObj = graphJson.goals.primary.nodes;
+sDebug += nodeObj;
+var nodeCounter = 0;
+var groupingCounter = defaultGroupingId;
+var nodeArray = [];
+var nodeIdHash = {};
+var edgeArray = [];
+// define group Node
+var nodeItem = {};
+var nodeGroupingId = groupingCounter;
+nodeItem.id = groupingCounter;
+nodeItem.label = grTopic.name;
+nodeItem.nodeType = 'group';
+nodeArray.push(nodeItem);
+for (var nodeSysId in nodeObj) {
+    nodeItem = {};
+    nodeIdHash[nodeObj[nodeSysId].id.toString()] = nodeCounter;
+    sDebug += nodeCounter + "|" + nodeObj[nodeSysId].id + "|" + nodeObj[nodeSysId].stepType + "|" + nodeObj[nodeSysId].name + "\n";
+
+    var label = 'empty node';
+    if (nodeTextLevel == 'basic') {
+        label = nodeObj[nodeSysId].name;
+    } else {
+        if (nodeTextLevel == 'advanced') {
+            label = nodeObj[nodeSysId].name + "|" + nodeObj[nodeSysId].id + "|" + nodeObj[nodeSysId].stepType;
+        } else {
+            label = nodeObj[nodeSysId].name + "|" + nodeObj[nodeSysId].id + "|" + nodeObj[nodeSysId].stepType;
+        }
+    }
+    nodeItem.id = nodeCounter;
+    nodeItem.label = label;
+	nodeItem.nodeType = 'node';
+    nodeItem.groupingId = nodeGroupingId;
+    nodeItem.color = getColor(nodeObj[nodeSysId].stepType);
+    nodeItem.width = getWidth(label);
+    nodeCounter++;
+    nodeArray.push(nodeItem);
+}
+jsonData.nodes = nodeArray;
+var edgeObj = graphJson.goals.primary.edges;
+for (var edgeKey = 0; edgeKey < edgeObj.length; edgeKey++) {
+    var edgeEachObj = edgeObj[edgeKey];
+    var edgeItem = {};
+    edgeItem.source = nodeIdHash[edgeEachObj.source.toString()];
+    edgeItem.target = nodeIdHash[edgeEachObj.target.toString()];
+    edgeArray.push(edgeItem);
+}
+
+jsonData.nodes = nodeArray;
+jsonData.edges = edgeArray;
+
+var convObj = new JsonToGmlUtil();
+convObj.getGmlFromJson(jsonData);
+
+function getWidth(inputText) {
+    sDebug += +"\n";
+    var mulFactor = 8;
+    var retWdith = 200;
+    var txtLength = 1;
+    txtLength = inputText.length;
+    retWdith = txtLength * mulFactor;
+    sDebug += " inputText = " + inputText + " txtLength = " + txtLength + " retWdith = " + retWdith + "\n";
+    return retWdith;
+}
+
+function getColor(inputType) {
+    sDebug += " inputType= " + inputType + "\n";
+    var retColor = '#FFCC00';
+    var randomIndex = 8;
+    if (global.JSUtil.notNil(colorHash[inputType])) {
+        retColor = colorHash[inputType];
+        sDebug += " retColor if= " + retColor + "\n";
+    } else {
+        randomIndex = Math.floor(Math.random() * colorArray.length);
+        retColor = colorArray[randomIndex];
+        colorArray.splice(randomIndex, 1);
+        colorHash[inputType] = retColor;
+        sDebug += " retColor if= " + retColor + " colorArray = " + colorArray + "\n";
+    }
+    if (global.JSUtil.nil(retColor)) {
+        retColor = '#FFCC00';
+    }
+    return retColor;
+}
+//gs.info(sDebug);]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 18:14:40</sys_created_on>
+        <sys_id>0e39b27c834c6210b0abcfc0deaad38a</sys_id>
+        <sys_mod_count>30</sys_mod_count>
+        <sys_name>AVTestJsonToGmlFromJsonVariable</sys_name>
+        <sys_package display_value="JsonToGraphML Converter" source="x_146833_jsontog_0">f185f678834c6210b0abcfc0deaad32a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="JsonToGraphML Converter">f185f678834c6210b0abcfc0deaad32a</sys_scope>
+        <sys_update_name>sys_script_fix_0e39b27c834c6210b0abcfc0deaad38a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 04:01:02</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>0e39b27c834c6210b0abcfc0deaad38a</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 18:15:52</sys_created_on>
+        <sys_id>fb79fa3c834c6210b0abcfc0deaad324</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-28 18:15:52</sys_updated_on>
+        <table>sys_script_fix</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

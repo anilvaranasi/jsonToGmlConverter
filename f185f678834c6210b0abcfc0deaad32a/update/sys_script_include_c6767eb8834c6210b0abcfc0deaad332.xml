@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_146833_jsontog_0.JsonToGmlUtil</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>JsonToGmlUtil</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var JsonToGmlUtil = Class.create();
+JsonToGmlUtil.prototype = {
+    initialize: function() {},
+
+    getGml: function() {
+        // Sample JSON data
+        var jsonData = {
+            "nodes": [{
+                    "id": "0",
+                    "label": "Node 0"
+                },
+                {
+                    "id": "1",
+                    "label": "Node 1"
+                },
+                {
+                    "id": "2",
+                    "label": "Node 2"
+                }
+            ],
+            "edges": [{
+                    "source": "0",
+                    "target": "1"
+                },
+                {
+                    "source": "1",
+                    "target": "2"
+                }
+            ]
+        };
+
+
+
+
+        // Convert and log the GML output
+        var gmlOutput = this._jsonToGml(jsonData);
+        // gs.info("OutputGML=" + gmlOutput);
+    },
+
+    getGmlFromJson: function(jsonData) {
+        // Sample JSON data
+        // Convert and log the GML output
+        var gmlOutput = this._jsonToGml(jsonData);
+        //gs.info("OutputGML=" + gmlOutput);
+        return gmlOutput;
+    },
+    // Function to convert JSON to GML
+    _jsonToGml: function(json) {
+        var gml = "graph [\n";
+
+        // Add nodes
+        json.nodes.forEach(function(node) {
+            if ((node.nodeType) == 'node') {
+                gml += `  node [\n    id ${node.id}\n    label "${node.label}"\n graphics [ \n w ${node.width} \n h 40 \n  fill "${node.color}" \n  ] \n  gid ${node.groupingId} \n]\n`;
+            } else {
+                if ((node.nodeType) == 'group') {
+                    gml += `  node [\n    id ${node.id}\n    label "${node.label}"\n isGroup	1  \n ]\n`;
+                }
+            }
+        });
+
+        // Add edges
+        json.edges.forEach(function(edge) {
+            if (global.JSUtil.nil(edge.style)) {
+                gml += `  edge [\n    source ${edge.source}\n    target ${edge.target}\n  ]\n`;
+            }
+            if (global.JSUtil.notNil(edge.style)) {
+                gml += `  edge [\n    source ${edge.source}\n    target ${edge.target}\n graphics \n [ \n style ${edge.style}	\n targetArrow	"standard" \n  ]\n`;
+            }
+        });
+
+        gml += "]";
+        return gml;
+    },
+    type: 'JsonToGmlUtil'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 18:06:13</sys_created_on>
+        <sys_id>c6767eb8834c6210b0abcfc0deaad332</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>JsonToGmlUtil</sys_name>
+        <sys_package display_value="JsonToGraphML Converter" source="x_146833_jsontog_0">f185f678834c6210b0abcfc0deaad32a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="JsonToGraphML Converter">f185f678834c6210b0abcfc0deaad32a</sys_scope>
+        <sys_update_name>sys_script_include_c6767eb8834c6210b0abcfc0deaad332</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 18:58:32</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c6767eb8834c6210b0abcfc0deaad332</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 18:06:13</sys_created_on>
+        <sys_id>d64772f4834c6210b0abcfc0deaad3cb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-28 18:06:13</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

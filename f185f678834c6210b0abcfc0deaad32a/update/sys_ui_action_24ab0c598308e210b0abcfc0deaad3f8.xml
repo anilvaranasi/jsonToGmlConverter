@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments/>
+        <condition>global.JSUtil.notNil(current.graph)</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Analyze Topic GML</name>
+        <onclick/>
+        <order>100</order>
+        <script><![CDATA[ var grAttachment = new GlideRecord('sys_attachment');
+ grAttachment.addQuery('table_sys_id', current.sys_id);
+ grAttachment.addQuery('table_name', current.sys_class_name);
+ grAttachment.query();
+ while (grAttachment.next()) {
+     grAttachment.setWorkflow(false);
+     grAttachment.deleteRecord();
+ }
+
+ var attachment = new GlideSysAttachment();
+ var gmlOutput;
+ var topicId = current.sys_id;
+ var jsonObj = new getGraphForTopicUtil();
+ gmlOutput = jsonObj.getGraphForVATopic(topicId);
+ //gs.info("OutputGML 3 =" + gmlOutput);
+ var fileName = current.name + "-" + new GlideDate().getDisplayValue() +  '.gml';
+ var contentType = 'application/octet-stream	';
+ var content = '';
+ content = gmlOutput;
+ var agr = attachment.write(current, fileName, contentType, content);
+ //gs.info('OutputGML 4 : ' + agr);
+ gs.addInfoMessage('Attachment '+ fileName+ ' is created with GML export of topic. If there old attachments are not relevant please delete them from sys_attachment table.');
+ action.setRedirectURL(current);]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 18:53:58</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>24ab0c598308e210b0abcfc0deaad3f8</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>Analyze Topic GML</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="JsonToGraphML Converter" source="x_146833_jsontog_0">f185f678834c6210b0abcfc0deaad32a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="JsonToGraphML Converter">f185f678834c6210b0abcfc0deaad32a</sys_scope>
+        <sys_update_name>sys_ui_action_24ab0c598308e210b0abcfc0deaad3f8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 19:30:38</sys_updated_on>
+        <table>sys_cb_topic</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>24ab0c598308e210b0abcfc0deaad3f8</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 18:53:56</sys_created_on>
+        <sys_id>4fcbc8598308e210b0abcfc0deaad31f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 18:53:56</sys_updated_on>
+        <table>sys_ui_action</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>
