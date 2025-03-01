@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>AVGetGmlForVATopic</name>
+        <record_for_rollback>false</record_for_rollback>
+        <script><![CDATA[var topicId = 'f9e444ee53113010af71ddeeff7b1223';
+var jsonObj = new getGraphForTopicUtil();
+var jsonData1 = {};
+var groupId = gs.getProperty('x_146833_jsontog_0.node.grouping.id');
+var nodeId = gs.getProperty('x_146833_jsontog_0.node.id');
+jsonData1 = jsonObj.getGraphForTopic(topicId, groupId,nodeId);
+
+topicId = 'f6b9287b53923010d923ddeeff7b12b4';
+jsonObj = new getGraphForTopicUtil();
+var jsonData2 = {};
+groupId = groupId*2;
+nodeId += 1000; 
+jsonData2 = jsonObj.getGraphForTopic(topicId , groupId,nodeId);
+
+var nodeArray = [];
+var edgeArray = [];
+processJson(jsonData1);
+processJson(jsonData2);
+var jsonData0 = {};
+jsonData0.nodes = nodeArray;
+jsonData0.edges = edgeArray;
+
+var convObj = new JsonToGmlUtil();
+convObj.getGmlFromJson(jsonData0);
+
+function processJson(jsonData) {
+    var nodeArray1 = [];
+    nodeArray1 = jsonData.nodes;
+    for (var k = 0; k < nodeArray1.length; k++) {
+        nodeArray.push(nodeArray1[k]);
+    }
+    var edgeArray1 = [];
+    edgeArray1 = jsonData.edges;
+    for (var k = 0; k < edgeArray1.length; k++) {
+        edgeArray.push(edgeArray1[k]);
+    }
+}]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 08:21:35</sys_created_on>
+        <sys_id>7389f5cd830ca210b0abcfc0deaad3d1</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>AVGetGmlForVATopic</sys_name>
+        <sys_package display_value="JsonToGraphML Converter" source="x_146833_jsontog_0">f185f678834c6210b0abcfc0deaad32a</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="JsonToGraphML Converter">f185f678834c6210b0abcfc0deaad32a</sys_scope>
+        <sys_update_name>sys_script_fix_7389f5cd830ca210b0abcfc0deaad3d1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 14:19:51</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>7389f5cd830ca210b0abcfc0deaad3d1</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 08:21:34</sys_created_on>
+        <sys_id>3f0bb5cd830ca210b0abcfc0deaad320</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 08:21:34</sys_updated_on>
+        <table>sys_script_fix</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

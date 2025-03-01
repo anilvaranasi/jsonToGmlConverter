@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_146833_jsontog_0.getGraphForTopicUtil</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>getGraphForTopicUtil</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var getGraphForTopicUtil = Class.create();
+getGraphForTopicUtil.prototype = {
+    initialize: function() {
+        this.jsonData = {};
+        this.colorHash = {};
+        //var topicSysId = '';
+        this.defaultGroupingId = gs.getProperty('x_146833_jsontog_0.node.grouping.id');
+        var colorList = gs.getProperty('x_146833_jsontog_0.color.palette');
+        this.colorArray = colorList.split("|");
+        this.nodeTextLevel = gs.getProperty('x_146833_jsontog_0.node.textdisplay.config.vatopic');
+        this.sDebug = 'printing from fix script ';
+        this.nodeArray = [];
+        this.edgeArray = [];
+        this.groupingCount = 1;
+        this.topicSysIds = {};
+        this.groupId = 10000;
+        this.groupId = gs.getProperty('x_146833_jsontog_0.node.grouping.id');
+        this.nodeId = 0;
+        this.nodeId = gs.getProperty('x_146833_jsontog_0.node.id');
+
+    },
+
+    getGraphForVATopic: function(topicSysId) {
+        var grTopic = new GlideRecord('sys_cb_topic');
+        grTopic.get(topicSysId);
+        var jsonData0 = {};
+        this._getGraphForSingleTopic(grTopic.sys_id);
+        //gs.info('OutputGML topicSysIds = ' + this.topicSysIds);
+        if (global.JSUtil.notNil(this.topicSysIds)) {
+            for (var k in this.topicSysIds) {
+                //gs.info('OutputGML insite k = ' + k + '');
+                this._getGraphForSingleTopic(k);
+                var edgeItem = {};
+                edgeItem.source = this.topicSysIds[k];
+                edgeItem.target = this.groupId;
+                edgeItem.style = gs.getProperty('x_146833_jsontog_0.edge.arrowstyle');
+                this.edgeArray.push(edgeItem);
+            }
+        }
+        jsonData0.nodes = this.nodeArray;
+        jsonData0.edges = this.edgeArray;
+        var convObj = new JsonToGmlUtil();
+        var gmlOutput = convObj.getGmlFromJson(jsonData0);
+        //gs.info("OutputGML 2=" + gmlOutput);
+        return gmlOutput;
+
+    },
+
+    _getGraphForSingleTopic: function(topicSysId) {
+        // call graph to get jsondata
+        // for each step type as reusable step make getJsonForGraph call again
+        // push data to edge hash with source and target mapped
+        // push data to edge array
+        var grTopic = new GlideRecord('sys_cb_topic');
+        grTopic.get(topicSysId);
+        var jsonData1 = {};
+        this.groupId = this.groupId * this.groupingCount;
+        var nodeIncrement = 1;
+		if(this.groupingCount > 1) {
+        nodeIncrement = 1000 * this.groupingCount;
+		this.nodeId = this.nodeId +  nodeIncrement;
+		}
+        var graph = grTopic.graph;
+        var groupingName = grTopic.name;
+        jsonData1 = this._getJsonForGraph(groupingName, graph);
+        this._processJson(jsonData1);
+        this.groupingCount++;
+    },
+
+    _getJsonForGraph: function(groupingName, graph) {
+        //var topicSysId = 'f9e444ee53113010af71ddeeff7b1223';
+        var graphJson = JSON.parse(graph);
+        var nodeObj = graphJson.goals.primary.nodes;
+        //sDebug += nodeObj;
+        var nodeCounter = 0;
+        if (global.JSUtil.notNil(this.nodeId)) {
+            nodeCounter = this.nodeId;
+        }
+        var groupingCounter = this.groupId;
+        var nodeArray = [];
+        var nodeIdHash = {};
+        var edgeArray = [];
+        // define group Node
+        var nodeItem = {};
+        var nodeGroupingId = groupingCounter;
+        nodeItem.id = groupingCounter;
+        nodeItem.label = groupingName;
+        nodeItem.nodeType = 'group';
+        nodeArray.push(nodeItem);
+        for (var nodeSysId in nodeObj) {
+            nodeItem = {};
+            nodeIdHash[nodeObj[nodeSysId].id.toString()] = nodeCounter;
+            var label = 'empty node';
+            if (nodeObj[nodeSysId].stepType == 'ReusableTopic') {
+                var topicName = nodeObj[nodeSysId].name.toString();
+                var topicId = this._getTopicIdByname(topicName);
+                if (global.JSUtil.notNil(topicId)) {
+                    gs.info('Outputinside nodeGroupingId = ' + nodeGroupingId + '');
+                    this.topicSysIds[topicId] = nodeCounter;
+                }
+            }
+            if (this.nodeTextLevel == 'basic') {
+                label = nodeObj[nodeSysId].name;
+            } else {
+                if (this.nodeTextLevel == 'advanced') {
+                    label = nodeObj[nodeSysId].name + "|" + nodeObj[nodeSysId].id + "|" + nodeObj[nodeSysId].stepType;
+                } else {
+                    label = nodeObj[nodeSysId].name + "|" + nodeObj[nodeSysId].id + "|" + nodeObj[nodeSysId].stepType;
+                }
+            }
+            nodeItem.id = nodeCounter;
+            nodeItem.label = label;
+            nodeItem.nodeType = 'node';
+            nodeItem.groupingId = nodeGroupingId;
+            nodeItem.color = this._getColor(nodeObj[nodeSysId].stepType);
+            nodeItem.width = this._getWidth(label);
+            nodeCounter++;
+            nodeArray.push(nodeItem);
+        }
+        var edgeObj = graphJson.goals.primary.edges;
+        for (var edgeKey = 0; edgeKey < edgeObj.length; edgeKey++) {
+            var edgeEachObj = edgeObj[edgeKey];
+            var edgeItem = {};
+            edgeItem.source = nodeIdHash[edgeEachObj.source.toString()];
+            edgeItem.target = nodeIdHash[edgeEachObj.target.toString()];
+            edgeArray.push(edgeItem);
+        }
+        this.jsonData.nodes = nodeArray;
+        this.jsonData.edges = edgeArray;
+        return this.jsonData;
+    },
+
+    _processJson: function(jsonData) {
+        var nodeArray1 = [];
+        nodeArray1 = jsonData.nodes;
+        for (var k = 0; k < nodeArray1.length; k++) {
+            this.nodeArray.push(nodeArray1[k]);
+        }
+        var edgeArray1 = [];
+        edgeArray1 = jsonData.edges;
+        for (var k = 0; k < edgeArray1.length; k++) {
+            this.edgeArray.push(edgeArray1[k]);
+        }
+    },
+    _getTopicIdByname: function(topicName) {
+        var topicId = '';
+        var grTopic = new GlideRecord('sys_cb_topic');
+        var topicEnquery = 'name=' + topicName;
+        //gs.info('OutputGML = ' + topicEnquery);
+        grTopic.addEncodedQuery(topicEnquery);
+        grTopic.query();
+        if (grTopic.next()) {
+            topicId = grTopic.sys_id.toString();
+        }
+        return topicId;
+    },
+
+    _getWidth: function(inputText) {
+        var mulFactor = 8;
+        var retWdith = 200;
+        var txtLength = 1;
+        txtLength = inputText.length;
+        retWdith = txtLength * mulFactor;
+        return retWdith;
+    },
+
+    _getColor: function(inputType) {
+        var retColor = '#FFCC00';
+        var randomIndex = 8;
+        if (global.JSUtil.notNil(this.colorHash[inputType])) {
+            retColor = this.colorHash[inputType];
+        } else {
+            randomIndex = Math.floor(Math.random() * this.colorArray.length);
+            retColor = this.colorArray[randomIndex];
+            this.colorArray.splice(randomIndex, 1);
+            this.colorHash[inputType] = retColor;
+        }
+        if (global.JSUtil.nil(retColor)) {
+            retColor = '#FFCC00';
+        }
+        return retColor.trim();
+    },
+    type: 'getGraphForTopicUtil'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 08:23:33</sys_created_on>
+        <sys_id>248939cd830ca210b0abcfc0deaad360</sys_id>
+        <sys_mod_count>56</sys_mod_count>
+        <sys_name>getGraphForTopicUtil</sys_name>
+        <sys_package display_value="JsonToGraphML Converter" source="x_146833_jsontog_0">f185f678834c6210b0abcfc0deaad32a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="JsonToGraphML Converter">f185f678834c6210b0abcfc0deaad32a</sys_scope>
+        <sys_update_name>sys_script_include_248939cd830ca210b0abcfc0deaad360</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 19:29:29</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>248939cd830ca210b0abcfc0deaad360</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 08:23:32</sys_created_on>
+        <sys_id>248b3181834ca210b0abcfc0deaad304</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 08:23:32</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>
