@@ -1,0 +1,1077 @@
+{
+  "graph_api_version": "1.0.39",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "85d79000768240bba64228e5fbdcbabe": {
+          "id": "85d79000768240bba64228e5fbdcbabe",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "ef29d03ddd5f485f885cd1a78d715348": {
+          "id": "ef29d03ddd5f485f885cd1a78d715348",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "93be063a3ee94695b3368a11c821b3c2": {
+          "id": "93be063a3ee94695b3368a11c821b3c2",
+          "stepType": "ReusableTopic",
+          "name": "Contextual Search",
+          "fields": [],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "reusableTopicChoice": "Contextual Search",
+          "reusableTopicId": "d9dec393b3973300dbbf6030c6a8dc27",
+          "inputs": {
+            "context": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.searchContext}}",
+                        "displayValue": "Script Variables➛searchContext"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "query": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.keyword}}",
+                        "displayValue": "Script Variables➛keyword"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "portal": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.portal}}",
+                        "displayValue": "Script Variables➛portal"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "kb_knowledge_base": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.kb_knowledge_base}}",
+                        "displayValue": "Script Variables➛kb_knowledge_base"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            }
+          },
+          "outputs": [
+            {
+              "id": "c26f1144e4e14e309cb3d1584e3a1d54",
+              "value": "results_returned",
+              "mapping": "results_returned",
+              "preventDisable": false
+            },
+            {
+              "id": "6fd0b22b79d540998f30d616398d4e69",
+              "value": "results_helpful",
+              "mapping": "results_helpful",
+              "preventDisable": false
+            },
+            {
+              "id": "98ea06a9225145bb956b160eb6d79a6a",
+              "value": "ctx_search_details",
+              "mapping": "ctx_search_details",
+              "preventDisable": false
+            }
+          ],
+          "variableIds": [
+            "c26f1144e4e14e309cb3d1584e3a1d54",
+            "6fd0b22b79d540998f30d616398d4e69",
+            "98ea06a9225145bb956b160eb6d79a6a"
+          ],
+          "outdatedNote": false,
+          "loading": false
+        },
+        "a605210b9ddd4cc59f2f7ef2de79dae4": {
+          "id": "a605210b9ddd4cc59f2f7ef2de79dae4",
+          "stepType": "Decision",
+          "name": "KB(s) found?"
+        },
+        "346ceeb6083d48bbaf7dfd1cd99bc128": {
+          "id": "346ceeb6083d48bbaf7dfd1cd99bc128",
+          "stepType": "TextOutput",
+          "name": "KB not found",
+          "secure": false,
+          "value": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Unfortunately, I couldn't find any information on that for you."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "a6369365d22b452da5a7b243f26ff186": {
+          "id": "a6369365d22b452da5a7b243f26ff186",
+          "stepType": "Decision",
+          "name": "Helpful?"
+        },
+        "1c1de614e41446e58125b4ff7c58f24d": {
+          "id": "1c1de614e41446e58125b4ff7c58f24d",
+          "stepType": "Prompt",
+          "name": "HR Case",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Do you want to create a new case for this request?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "b93f6435573e4f88b3a6eaa66cebda42"
+        },
+        "a6bc754aa1f8496e9a4e632f51686cdd": {
+          "id": "a6bc754aa1f8496e9a4e632f51686cdd",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "741be3f3b03149d2975f4c170dd5817b": {
+          "stepType": "ChoicePrompt",
+          "name": "which month",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "OK, do you want a payslip for last month or previous months?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "a2f032cb6b3d465d9f728d492ead39d1",
+          "id": "741be3f3b03149d2975f4c170dd5817b",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "6c7d7c6af582482187cd501f7d294534": {
+          "id": "6c7d7c6af582482187cd501f7d294534",
+          "stepType": "ReusableTopic",
+          "name": "Create HR Case",
+          "fields": [],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "reusableTopicChoice": "Create HR Case",
+          "reusableTopicId": "f943c3b3cbd333002905154df8076d26",
+          "inputs": {
+            "hr_service": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.hrServiceId}}",
+                        "displayValue": "Script Variables➛hrServiceId"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "case_table": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.caseTable}}",
+                        "displayValue": "Script Variables➛caseTable"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "case_questions": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.caseQuestions}}",
+                        "displayValue": "Script Variables➛caseQuestions"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            }
+          },
+          "outputs": [
+            {
+              "id": "edaed4efbd164b129bbe7ce6d2cf764a",
+              "value": "is_case_created",
+              "mapping": "is_case_created",
+              "preventDisable": false
+            },
+            {
+              "id": "0a54b90fcc7646bf81de24ad5fcae709",
+              "value": "case_id",
+              "mapping": "case_id",
+              "preventDisable": false
+            }
+          ],
+          "variableIds": [
+            "edaed4efbd164b129bbe7ce6d2cf764a",
+            "0a54b90fcc7646bf81de24ad5fcae709"
+          ],
+          "outdatedNote": false,
+          "loading": false
+        },
+        "1f7ff2fc87004e049070c7038bf0e447": {
+          "id": "1f7ff2fc87004e049070c7038bf0e447",
+          "name": "caseQuestion",
+          "script": "(function execute() {\n      \n    var questions = [\n        {\n            question : 'OK, do you want a payslip for last month or previous months?',\n            name : 'month/s',\n            answer :vaInputs.which_month,\n            raw : vaInputs.which_month,\n            order : 10,\n            answerDisplayValue :  vaInputs.which_month.getDisplayValue()\n        }\n    ];\n    if(vaInputs.which_month!='last month')\n    {\n          questions[questions.length]= {\n            question : 'Enter the month(s) you\\'d like a payslip for below:',\n            name : 'month',\n            answer :vaInputs.month,\n            raw : vaInputs.month,\n            order : 20,\n            answerDisplayValue :  vaInputs.month.getDisplayValue()\n        };\n    }\n    \n    vaVars.caseQuestions = JSON.stringify(questions);\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "b615bf3daad34ce8a975e51e267f02f9": {
+          "id": "b615bf3daad34ce8a975e51e267f02f9",
+          "stepType": "ReusableTopic",
+          "name": "Confirmed Deflection",
+          "fields": [],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "reusableTopicChoice": "Deflection",
+          "reusableTopicId": "7fb4ca055303201033cdddeeff7b12b3",
+          "inputs": {
+            "deflection_configuration": {
+              "value": "42902004eb913010226ed5c15252286e",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_configuration"
+            },
+            "deflection_pattern": {
+              "value": "3fb0e004eb913010226ed5c15252281a",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_pattern"
+            },
+            "activity_table": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "kb_knowledge"
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "activity_ids": {
+              "value": "(function execute() {\n    \n     try{\n        var kbs= JSON.parse(vaInputs.ctx_search_details).kb_knowledge;\n        return kbs.toString();\n    }\n    catch(err){\n        gs.info(\"error occurred while parsing kb_knowledge: {0}\",err);\n        return \"\";\n    }\n    \n})()\n",
+              "mode": "script",
+              "type": "String"
+            }
+          },
+          "variableIds": [],
+          "outputs": [],
+          "outdatedNote": false,
+          "loading": false
+        },
+        "62be4be61a8c4ecb8589184b86991370": {
+          "id": "62be4be61a8c4ecb8589184b86991370",
+          "stepType": "ReusableTopic",
+          "name": "Partial Deflection",
+          "fields": [],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "reusableTopicChoice": "Deflection",
+          "reusableTopicId": "7fb4ca055303201033cdddeeff7b12b3",
+          "inputs": {
+            "deflection_configuration": {
+              "value": "42902004eb913010226ed5c15252286e",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_configuration"
+            },
+            "deflection_pattern": {
+              "value": "41e0a404eb913010226ed5c152522810",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_pattern"
+            },
+            "activity_table": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.caseTable}}",
+                        "displayValue": "Script Variables➛caseTable"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "activity_ids": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaInputs.case_id}}",
+                        "displayValue": "Input Variables➛Case_id"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            }
+          },
+          "variableIds": [],
+          "outputs": []
+        },
+        "b420b1acb1784275bfd023f8da7223d8": {
+          "id": "b420b1acb1784275bfd023f8da7223d8",
+          "stepType": "ReusableTopic",
+          "name": "No Deflection",
+          "fields": [],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "reusableTopicChoice": "Deflection",
+          "reusableTopicId": "7fb4ca055303201033cdddeeff7b12b3",
+          "inputs": {
+            "deflection_configuration": {
+              "value": "42902004eb913010226ed5c15252286e",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_configuration"
+            },
+            "deflection_pattern": {
+              "value": "ac14021eeb5130101d4e509ba85228bf",
+              "mode": "string",
+              "type": "Reference",
+              "table": "ssa_deflection_pattern"
+            },
+            "activity_table": {
+              "value": "",
+              "mode": "simple",
+              "type": "String"
+            },
+            "activity_ids": {
+              "value": "",
+              "mode": "simple",
+              "type": "String"
+            }
+          },
+          "variableIds": [],
+          "outputs": [],
+          "outdatedNote": false,
+          "loading": false
+        },
+        "6ba464788a534289a03091c4c0bfb2d5": {
+          "id": "6ba464788a534289a03091c4c0bfb2d5",
+          "stepType": "Prompt",
+          "name": "month",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Enter the month(s) you'd like a payslip for below:"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "d43b7fd0d81d45868c9fa86cfddfc0ce",
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          }
+        },
+        "8ef5626abf73406ea50c6aa0fdd5fad5": {
+          "id": "8ef5626abf73406ea50c6aa0fdd5fad5",
+          "stepType": "Decision",
+          "name": "Last month?"
+        }
+      },
+      "edges": [
+        {
+          "id": "9aec71fc23b2482683d10fcdd03aa7e6",
+          "edgeType": "Edge",
+          "source": "6ba464788a534289a03091c4c0bfb2d5",
+          "target": "1f7ff2fc87004e049070c7038bf0e447",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "8b6314e4db2542e799ced70ddd4c809e",
+          "edgeType": "Edge",
+          "source": "85d79000768240bba64228e5fbdcbabe",
+          "target": "93be063a3ee94695b3368a11c821b3c2",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "700a2390d24c441fb564b32e473492c4",
+          "edgeType": "Edge",
+          "source": "93be063a3ee94695b3368a11c821b3c2",
+          "target": "a605210b9ddd4cc59f2f7ef2de79dae4",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "e2e5d5c6abd147f183d1d16755843993",
+          "edgeType": "Branch",
+          "source": "a605210b9ddd4cc59f2f7ef2de79dae4",
+          "target": "346ceeb6083d48bbaf7dfd1cd99bc128",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.results_returned=false",
+            "mode": "query"
+          },
+          "label": "No"
+        },
+        {
+          "id": "d38fa8ea4d5944e881867a2c5a8cd091",
+          "edgeType": "Edge",
+          "source": "346ceeb6083d48bbaf7dfd1cd99bc128",
+          "target": "1c1de614e41446e58125b4ff7c58f24d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6ee9b43b6fd44ad5a90eb437c7953b0b",
+          "edgeType": "Branch",
+          "source": "a605210b9ddd4cc59f2f7ef2de79dae4",
+          "target": "a6369365d22b452da5a7b243f26ff186",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.results_returned=true",
+            "mode": "query"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "8dadc8a657064343bfb255b98b2beff3",
+          "edgeType": "Branch",
+          "source": "a6369365d22b452da5a7b243f26ff186",
+          "target": "1c1de614e41446e58125b4ff7c58f24d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.results_helpful=false",
+            "mode": "query"
+          },
+          "label": "No"
+        },
+        {
+          "id": "3309b1c4771549d1aadc46848d238981",
+          "edgeType": "Edge",
+          "source": "1c1de614e41446e58125b4ff7c58f24d",
+          "target": "a6bc754aa1f8496e9a4e632f51686cdd",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "158e15e556754c68b9b2cfdee881f441",
+          "edgeType": "Branch",
+          "source": "a6bc754aa1f8496e9a4e632f51686cdd",
+          "target": "741be3f3b03149d2975f4c170dd5817b",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.hr_case=true",
+            "mode": "query"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "d26a1850a095401fa25e426912f64386",
+          "edgeType": "Edge",
+          "source": "1f7ff2fc87004e049070c7038bf0e447",
+          "target": "6c7d7c6af582482187cd501f7d294534",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "4953eaf0d7134c10bdcaed1e95c8b0b0",
+          "edgeType": "Branch",
+          "source": "a6369365d22b452da5a7b243f26ff186",
+          "target": "b615bf3daad34ce8a975e51e267f02f9",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.results_helpful=true",
+            "mode": "query"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "2254977ad4d043e2a9686b7ff0c7132c",
+          "edgeType": "Edge",
+          "source": "b615bf3daad34ce8a975e51e267f02f9",
+          "target": "ef29d03ddd5f485f885cd1a78d715348",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "56a8927f73b84f138cdbb386a4a5cf28",
+          "edgeType": "Edge",
+          "source": "6c7d7c6af582482187cd501f7d294534",
+          "target": "62be4be61a8c4ecb8589184b86991370",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "c05c6e01675f4703af1d7590dee98d5b",
+          "edgeType": "Edge",
+          "source": "62be4be61a8c4ecb8589184b86991370",
+          "target": "ef29d03ddd5f485f885cd1a78d715348",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "273754ddffcd4e0299de55f8858fe748",
+          "edgeType": "Branch",
+          "source": "a6bc754aa1f8496e9a4e632f51686cdd",
+          "target": "b420b1acb1784275bfd023f8da7223d8",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.hr_case=",
+            "mode": "query"
+          },
+          "label": "No"
+        },
+        {
+          "id": "6d5b637f3a5a42c98c5613fb66193542",
+          "edgeType": "Edge",
+          "source": "b420b1acb1784275bfd023f8da7223d8",
+          "target": "ef29d03ddd5f485f885cd1a78d715348",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "3fc74ec24407405a80d2d23ac3d36884",
+          "edgeType": "Edge",
+          "source": "741be3f3b03149d2975f4c170dd5817b",
+          "target": "8ef5626abf73406ea50c6aa0fdd5fad5",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "9b12e5f8b1bd4c27adba0716a21b667e",
+          "edgeType": "Branch",
+          "source": "8ef5626abf73406ea50c6aa0fdd5fad5",
+          "target": "6ba464788a534289a03091c4c0bfb2d5",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.which_month=previous months",
+            "mode": "query"
+          },
+          "label": "previous month(s)"
+        },
+        {
+          "id": "1b67c2f95a504b049e96328a271ed2ab",
+          "edgeType": "Branch",
+          "source": "8ef5626abf73406ea50c6aa0fdd5fad5",
+          "target": "1f7ff2fc87004e049070c7038bf0e447",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.which_month=last month",
+            "mode": "query"
+          },
+          "label": "Last month"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "11eb06f0235e4810984f24bb744e4718": {
+      "id": "11eb06f0235e4810984f24bb744e4718",
+      "name": "LiveAgent_hr_topic_id",
+      "value": {
+        "mode": "simple",
+        "value": "586c0d09775101104c99aa9ccd5a9912"
+      },
+      "varType": "script",
+      "category": "vaVars",
+      "label": "LiveAgent_hr_topic_id"
+    },
+    "ddc7ed84ab39437b964e1f322b5a39e1": {
+      "id": "ddc7ed84ab39437b964e1f322b5a39e1",
+      "name": "LiveAgent_application",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return 'hr';\n})()"
+      },
+      "varType": "script",
+      "category": "vaVars",
+      "label": "LiveAgent_application"
+    },
+    "b8653fd378db4c41a19a6950b28d12c4": {
+      "id": "b8653fd378db4c41a19a6950b28d12c4",
+      "name": "LiveAgent_hr_queue",
+      "value": {
+        "mode": "simple",
+        "value": "fde232209f22120047a2d126c42e70ab"
+      },
+      "varType": "script",
+      "category": "vaVars",
+      "label": "LiveAgent_hr_queue"
+    },
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "989886384e7d46fdaede7f82e62d4da6": {
+      "id": "989886384e7d46fdaede7f82e62d4da6",
+      "value": {
+        "mode": "simple",
+        "value": "bb0370019f22120047a2d126c42e7073"
+      },
+      "name": "kb_knowledge_base",
+      "label": "kb_knowledge_base",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "639f772ccd5f4dd1a50010c7dbc1d913": {
+      "id": "639f772ccd5f4dd1a50010c7dbc1d913",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return vaSystem.portal || new sn_hr_sp.hr_TicketPageConfigUtil().getActivePortalURLSuffix();\n})()\n\n"
+      },
+      "name": "portal",
+      "label": "portal",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "8e1405135e344157881b925ddb03ac2c": {
+      "id": "8e1405135e344157881b925ddb03ac2c",
+      "value": {
+        "mode": "simple",
+        "value": "ff0370019f22120047a2d126c42e706f"
+      },
+      "name": "searchContext",
+      "label": "searchContext",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "69579a4825e6476c9d378efcb16c0c63": {
+      "id": "69579a4825e6476c9d378efcb16c0c63",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return 'download payslip request';\n})()\n"
+      },
+      "name": "keyword",
+      "label": "keyword",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "c26f1144e4e14e309cb3d1584e3a1d54": {
+      "id": "c26f1144e4e14e309cb3d1584e3a1d54",
+      "name": "results_returned",
+      "label": "Results_returned",
+      "defaultValue": "results_returned",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "preventDisable": false
+    },
+    "6fd0b22b79d540998f30d616398d4e69": {
+      "id": "6fd0b22b79d540998f30d616398d4e69",
+      "name": "results_helpful",
+      "label": "Results_helpful",
+      "defaultValue": "results_helpful",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "preventDisable": false
+    },
+    "98ea06a9225145bb956b160eb6d79a6a": {
+      "id": "98ea06a9225145bb956b160eb6d79a6a",
+      "name": "ctx_search_details",
+      "label": "Ctx_search_details",
+      "defaultValue": "ctx_search_details",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "preventDisable": false
+    },
+    "b93f6435573e4f88b3a6eaa66cebda42": {
+      "id": "b93f6435573e4f88b3a6eaa66cebda42",
+      "name": "hr_case",
+      "label": "HR Case",
+      "varType": "boolean",
+      "secure": false,
+      "category": "vaInputs"
+    },
+    "a2f032cb6b3d465d9f728d492ead39d1": {
+      "id": "a2f032cb6b3d465d9f728d492ead39d1",
+      "name": "which_month",
+      "label": "Which Month",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "Last month",
+          "value": "last month"
+        },
+        {
+          "label": "Previous months",
+          "value": "previous months",
+          "checked": true
+        }
+      ],
+      "category": "vaInputs"
+    },
+    "edaed4efbd164b129bbe7ce6d2cf764a": {
+      "id": "edaed4efbd164b129bbe7ce6d2cf764a",
+      "name": "is_case_created",
+      "label": "Is_case_created",
+      "defaultValue": "is_case_created",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "preventDisable": false
+    },
+    "0a54b90fcc7646bf81de24ad5fcae709": {
+      "id": "0a54b90fcc7646bf81de24ad5fcae709",
+      "name": "case_id",
+      "label": "Case_id",
+      "defaultValue": "case_id",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      },
+      "preventDisable": false
+    },
+    "6a21a6164917406bb9f93e493a6d6584": {
+      "id": "6a21a6164917406bb9f93e493a6d6584",
+      "value": {
+        "mode": "simple",
+        "value": "sn_hr_core_case_payroll"
+      },
+      "name": "caseTable",
+      "label": "caseTable",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "4c5c16119b174f4b97bafe181cefc76c": {
+      "id": "4c5c16119b174f4b97bafe181cefc76c",
+      "value": {
+        "mode": "simple",
+        "value": "d628cde49f331200d9011977677fcf02"
+      },
+      "name": "hrServiceId",
+      "label": "hrServiceId",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "d43b7fd0d81d45868c9fa86cfddfc0ce": {
+      "id": "d43b7fd0d81d45868c9fa86cfddfc0ce",
+      "name": "month",
+      "label": "Month",
+      "varType": "string",
+      "secure": false,
+      "category": "vaInputs",
+      "encryptionHashFunction": "SHA-256",
+      "encryptionSalt": {
+        "value": "MTY0MzI2ODU1ODA3OCBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      }
+    }
+  }
+}
