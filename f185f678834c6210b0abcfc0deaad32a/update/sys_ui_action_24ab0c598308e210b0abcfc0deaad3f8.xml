@@ -36,7 +36,8 @@
  grAttachment.query();
  while (grAttachment.next()) {
      grAttachment.setWorkflow(false);
-     grAttachment.deleteRecord();
+     //delete is removed on purpose since this scoped app doesnt have delete permissions
+	 //grAttachment.deleteRecord();
  }
 
  var attachment = new GlideSysAttachment();
@@ -63,7 +64,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>24ab0c598308e210b0abcfc0deaad3f8</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>Analyze Topic GML</sys_name>
         <sys_overrides/>
         <sys_package display_value="JsonToGraphML Converter" source="x_146833_jsontog_0">f185f678834c6210b0abcfc0deaad32a</sys_package>
@@ -71,7 +72,7 @@
         <sys_scope display_value="JsonToGraphML Converter">f185f678834c6210b0abcfc0deaad32a</sys_scope>
         <sys_update_name>sys_ui_action_24ab0c598308e210b0abcfc0deaad3f8</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-01 19:30:38</sys_updated_on>
+        <sys_updated_on>2025-03-02 05:40:58</sys_updated_on>
         <table>sys_cb_topic</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>
