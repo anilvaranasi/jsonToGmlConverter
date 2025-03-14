@@ -65,7 +65,11 @@ JsonToGmlUtil.prototype = {
                 gml += `  node [\n    id ${node.id}\n    label "${node.label}"\n graphics [ \n w ${node.width} \n h 40 \n  fill "${node.color}" \n  ] \n  gid ${node.groupingId} \n]\n`;
             } else {
                 if ((node.nodeType) == 'group') {
-                    gml += `  node [\n    id ${node.id}\n    label "${node.label}"\n isGroup	1  \n ]\n`;
+                    if (global.JSUtil.nil(node.groupingId)) {
+                        gml += `  node [\n    id ${node.id}\n    label "${node.label}"\n isGroup	1  \n ]\n`;
+                    } else {
+                        gml += `  node [\n    id ${node.id}\n    label "${node.label}"\n isGroup	1  \n gid ${node.groupingId} \n ]\n`;
+                    }
                 }
             }
         });
@@ -89,14 +93,14 @@ JsonToGmlUtil.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-28 18:06:13</sys_created_on>
         <sys_id>c6767eb8834c6210b0abcfc0deaad332</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>19</sys_mod_count>
         <sys_name>JsonToGmlUtil</sys_name>
         <sys_package display_value="JsonToGraphML Converter" source="x_146833_jsontog_0">f185f678834c6210b0abcfc0deaad32a</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="JsonToGraphML Converter">f185f678834c6210b0abcfc0deaad32a</sys_scope>
         <sys_update_name>sys_script_include_c6767eb8834c6210b0abcfc0deaad332</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-02 05:09:24</sys_updated_on>
+        <sys_updated_by>avaranasi</sys_updated_by>
+        <sys_updated_on>2025-03-14 06:43:52</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>c6767eb8834c6210b0abcfc0deaad332</id>
